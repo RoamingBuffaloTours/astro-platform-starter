@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silk Road Flight Progress</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: auto;
+        }
+        h2 {
+            color: #333;
+        }
+        .checklist {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .checklist label {
+            display: block;
+            padding: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .badge {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            background: gold;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Silk Road Flight Progress</h2>
+        <p>Check off each step as you progress through the flight.</p>
+        
+        <div class="checklist">
+            <label><input type="checkbox" id="step1"> Takeoff: Depart from Runway 09 at Samarkand (UTSS)</label>
+            <label><input type="checkbox" id="step2"> Initial Climb: Ascend to 2,000 ft, heading 270°</label>
+            <label><input type="checkbox" id="step3"> First Landmark: Overfly Registan Square</label>
+            <label><input type="checkbox" id="step4"> Course Adjustment: Turn northwest (300°), climb to 6,000 ft</label>
+            <label><input type="checkbox" id="step5"> Overfly: Bibi-Khanym Mosque and Shah-i-Zinda</label>
+            <label><input type="checkbox" id="step6"> Zeravshan River: Follow at 6,000 ft, heading 300°</label>
+            <label><input type="checkbox" id="step7"> Kyzylkum Desert: Adjust heading to 280°</label>
+            <label><input type="checkbox" id="step8"> Rabati Malik: Descend to 5,000 ft for a closer look</label>
+            <label><input type="checkbox" id="step9"> Kalyan Minaret: Adjust heading to 270°</label>
+            <label><input type="checkbox" id="step10"> Approach Bukhara: Descend to 3,000 ft</label>
+            <label><input type="checkbox" id="step11"> Lyab-i Hauz Square: Overfly at 2,500 ft</label>
+            <label><input type="checkbox" id="step12"> Final Turn: Adjust to 260° for Runway 09 (UTSB)</label>
+            <label><input type="checkbox" id="step13"> Landing: Reduce speed, descend to 2,000 ft, and land</label>
+            <label><input type="checkbox" id="step14"> (Optional) Taxi & Shut Down</label>
+        </div>
+        
+        <div class="badge" id="badge">🏆 Congratulations! You completed the flight! 🏆</div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const steps = document.querySelectorAll(".checklist input");
+            const badge = document.getElementById("badge");
+            
+            // Load saved progress
+            steps.forEach((step, index) => {
+                const checked = localStorage.getItem("step" + index) === "true";
+                step.checked = checked;
+            });
+            checkCompletion();
+            
+            // Save progress when a checkbox is clicked
+            steps.forEach((step, index) => {
+                step.addEventListener("change", function() {
+                    localStorage.setItem("step" + index, step.checked);
+                    checkCompletion();
+                });
+            });
+            
+            function checkCompletion() {
+                const allChecked = Array.from(steps).every(step => step.checked);
+                badge.style.display = allChecked ? "block" : "none";
+            }
+        });
+    </script>
+</body>
+</html>
